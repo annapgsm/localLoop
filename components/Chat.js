@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 
-const Chat = ({ route }) => {
+const Chat = ({ route, navigation }) => {
     const { name, backgroundColor } = route.params;
 
     const textColorByBackground = {
@@ -11,7 +12,10 @@ const Chat = ({ route }) => {
     };
 
     const textColor = textColorByBackground[backgroundColor] || '#000000';
-
+    useEffect(() => {
+        navigation.setOptions({ title: name });
+    }, []);
+    
     return (
         <View style={[styles.container, { backgroundColor }]}>
             <Text style={[styles.text, { color: textColor }]}>
@@ -27,7 +31,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    
+
     text: {
         fontSize: 18,
     },

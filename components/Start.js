@@ -33,7 +33,7 @@ const Start = ( {navigation} ) => {
                                 styles.ring,
                                 backgroundColor === '#090C08' && styles.ringSelected
                             ]}
-                            >
+                        >
                             <View style={[styles.fill, { backgroundColor: '#090C08' }]} />
                         </TouchableOpacity>
 
