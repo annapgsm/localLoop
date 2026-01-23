@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, TextInput, Alert, Button, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableOpacity, ImageBackground } from 'react-native';
 
 const Start = ( {navigation} ) => {
     const [text, setText] = useState('');
@@ -12,58 +12,82 @@ const Start = ( {navigation} ) => {
             style={styles.background}
         >
             <View style={styles.container}>
+
                 <Text style={styles.title}>Chat App</Text>
                 
-                <TextInput
-                style={styles.textInput}
-                value={text}
-                onChangeText={setText}
-                placeholder='Your Name'
-                placeholderTextColor="rgba(117, 112, 131, 0.5)"
-                />
-
-                <Text style={styles.colorLabel}>Choose background color:</Text>
-                <View style={styles.colorContainer}>
-                    <TouchableOpacity
-                        style={[styles.colorCircle, { backgroundColor: '#090C08' }]}
-                        onPress={() => setBackgroundColor('#090C08')}
+                <View style={styles.card}>
+                    <TextInput
+                    style={styles.textInput}
+                    value={text}
+                    onChangeText={setText}
+                    placeholder='Your Name'
+                    placeholderTextColor="rgba(117, 112, 131, 0.5)"
                     />
 
-                    <TouchableOpacity
-                        style={[styles.colorCircle, { backgroundColor: '#474056' }]}
-                        onPress={() => setBackgroundColor('#474056')}
-                    />
+                    <Text style={styles.colorLabel}>Choose background color:</Text>
+
+                    <View style={styles.colorContainer}>
+                        <TouchableOpacity
+                            onPress={() => setBackgroundColor('#090C08')}
+                            style={[
+                                styles.ring,
+                                backgroundColor === '#090C08' && styles.ringSelected
+                            ]}
+                            >
+                            <View style={[styles.fill, { backgroundColor: '#090C08' }]} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => setBackgroundColor('#474056')}
+                            style={[
+                                styles.ring,
+                                backgroundColor === '#474056' && styles.ringSelected
+                            ]}
+                            >
+                            <View style={[styles.fill, { backgroundColor: '#474056' }]} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => setBackgroundColor('#8A95A5')}
+                            style={[
+                                styles.ring,
+                                backgroundColor === '#8A95A5' && styles.ringSelected
+                            ]}
+                            >
+                            <View style={[styles.fill, { backgroundColor: '#8A95A5' }]} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => setBackgroundColor('#B9C6AE')}
+                            style={[
+                                styles.ring,
+                                backgroundColor === '#B9C6AE' && styles.ringSelected
+                            ]}
+                            >
+                            <View style={[styles.fill, { backgroundColor: '#B9C6AE' }]} />
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* 
+                    <Button
+                        title="Start Chatting"
+                        onPress={() => navigation.navigate('Chat', {
+                            name: text,
+                            backgroundColor: backgroundColor,
+                        })}
+                    /> 
+                    */}
 
                     <TouchableOpacity
-                        style={[styles.colorCircle, { backgroundColor: '#8A95A5' }]}
-                        onPress={() => setBackgroundColor('#8A95A5')}
-                    />
-
-                    <TouchableOpacity
-                        style={[styles.colorCircle, { backgroundColor: '#B9C6AE' }]}
-                        onPress={() => setBackgroundColor('#B9C6AE')}
-                    />
+                        style={styles.startButton}
+                        onPress={() => navigation.navigate('Chat',{
+                            name:text,
+                            backgroundColor: backgroundColor,
+                        })}
+                    >
+                        <Text style= {styles.startButtonText}>Start Chatting</Text>
+                    </TouchableOpacity>
                 </View>
-
-                {/* 
-                <Button
-                    title="Start Chatting"
-                    onPress={() => navigation.navigate('Chat', {
-                        name: text,
-                        backgroundColor: backgroundColor,
-                    })}
-                /> 
-                */}
-
-                <TouchableOpacity
-                    style={styles.startButton}
-                    onPress={() => navigation.navigate('Chat',{
-                        name:text,
-                        backgroundColor: backgroundColor,
-                    })}
-                >
-                    <Text style= {styles.startButtonText}>Start Chatting</Text>
-                </TouchableOpacity>
             </View>
         </ImageBackground>
     );
@@ -74,66 +98,90 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
     },
+
     container: {
         flex: 1,  /* spans full height of screen \*/
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 50,
     },
+
     title: {
         fontSize: 45, 
         fontWeight: '600', 
         color: '#FFFFFF',
         marginTop: 60,
     },
-    textInput: {
+
+    card: {
         width: '88%',
-        borderWidth: 1,
-        height: 50,
-        paddingHorizontal: 15,
-        fontSize: 16, 
-        fontWeight: '300', 
-        color: '#757083', 
+        height: '44%',
         backgroundColor: '#FFFFFF',
-        marginTop: 20,
-        marginBottom: 30,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingVertical: 20,
+        paddingHorizontal: 20,
     },
 
-    colorLabel: {
+    textInput: {
+        width: '100%',
+        borderWidth: 1,
+        borderColor: 'rgba(117, 112, 131, 0.5)',
+        height: 50,
+        paddingHorizontal: 15,
         fontSize: 16,
         fontWeight: '300',
         color: '#757083',
-        marginBottom: 15,
+        backgroundColor: '#FFFFFF',
     },
 
+    colorLabel: {
+        width: '100%',
+        fontSize: 16,
+        fontWeight: '300',
+        color: '#757083',
+    },
+    
+    colorContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginTop: 10,
+    },
+    
+    ring: {
+        width: 52,
+        height: 52,
+        borderRadius: 26,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    ringSelected: {
+        borderWidth: 2,
+        borderColor: '#757083',
+    },
+
+    fill: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+    },
+
+
     startButton: {
-        width: '88%',
+        width: '100%',
         height: 50,
         backgroundColor: '#757083',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
-        marginBottom: 40,
+        borderRadius: 2,
     },
 
     startButtonText: {
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: '600',
-    },
-
-
-    colorContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '88%',
-        marginBottom: 30,
-    },
-
-    colorCircle: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
     },
 });
 
