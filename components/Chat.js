@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, KeyboardAvoidingView} from 'react-native';
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
 
 const Chat = ({ route, navigation }) => {
 
@@ -65,12 +65,23 @@ const Chat = ({ route, navigation }) => {
             }}
         />
     };
+
+    const renderSystemMessage = (props) => (
+        <SystemMessage
+            {...props}
+            textStyle={{
+            color: textColor,
+            }}
+        />
+    );
+
     
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor }]}>
             <GiftedChat
                 messages={messages}
                 renderBubble={renderBubble}
+                renderSystemMessage={renderSystemMessage}
                 onSend={messages => onSend(messages)}
                 user={{
                     _id: 1,
@@ -78,9 +89,9 @@ const Chat = ({ route, navigation }) => {
                 }}
             />
 
-            {/* Prevents the keyboard from covering the input field on iOS */}
+            {/* Prevents the keyboard from covering the input field on iOS
+                        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }   */}
             {Platform.OS === "ios"?<KeyboardAvoidingView behavior="padding" />: null}
-            { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
         </View>
     );
 };
