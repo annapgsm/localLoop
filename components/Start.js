@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableOpacity, ImageBackground, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 const Start = ( {navigation} ) => {
     const [text, setText] = useState('');
@@ -11,84 +11,95 @@ const Start = ( {navigation} ) => {
             source={require('../assets/background.png')}
             style={styles.background}
         >
-            <View style={styles.container}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={90}
+            >
+                <ScrollView
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View style={styles.container}>
 
-                <Text style={styles.title}>Chat App</Text>
-                
-                <View style={styles.card}>
-                    <TextInput
-                    style={styles.textInput}
-                    value={text}
-                    onChangeText={setText}
-                    placeholder='Your Name'
-                    placeholderTextColor="rgba(117, 112, 131, 0.5)"
-                    />
+                        <Text style={styles.title}>Chat App</Text>
+                        
+                        <View style={styles.card}>
+                            <TextInput
+                            style={styles.textInput}
+                            value={text}
+                            onChangeText={setText}
+                            placeholder='Your Name'
+                            placeholderTextColor="rgba(117, 112, 131, 0.5)"
+                            />
 
-                    <Text style={styles.colorLabel}>Choose background color:</Text>
+                            <Text style={styles.colorLabel}>Choose background color:</Text>
 
-                    <View style={styles.colorContainer}>
-                        <TouchableOpacity
-                            onPress={() => setBackgroundColor('#090C08')}
-                            style={[
-                                styles.ring,
-                                backgroundColor === '#090C08' && styles.ringSelected
-                            ]}
-                        >
-                            <View style={[styles.fill, { backgroundColor: '#090C08' }]} />
-                        </TouchableOpacity>
+                            <View style={styles.colorContainer}>
+                                <TouchableOpacity
+                                    onPress={() => setBackgroundColor('#090C08')}
+                                    style={[
+                                        styles.ring,
+                                        backgroundColor === '#090C08' && styles.ringSelected
+                                    ]}
+                                >
+                                    <View style={[styles.fill, { backgroundColor: '#090C08' }]} />
+                                </TouchableOpacity>
 
-                        <TouchableOpacity
-                            onPress={() => setBackgroundColor('#474056')}
-                            style={[
-                                styles.ring,
-                                backgroundColor === '#474056' && styles.ringSelected
-                            ]}
+                                <TouchableOpacity
+                                    onPress={() => setBackgroundColor('#474056')}
+                                    style={[
+                                        styles.ring,
+                                        backgroundColor === '#474056' && styles.ringSelected
+                                    ]}
+                                    >
+                                    <View style={[styles.fill, { backgroundColor: '#474056' }]} />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => setBackgroundColor('#8A95A5')}
+                                    style={[
+                                        styles.ring,
+                                        backgroundColor === '#8A95A5' && styles.ringSelected
+                                    ]}
+                                    >
+                                    <View style={[styles.fill, { backgroundColor: '#8A95A5' }]} />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => setBackgroundColor('#B9C6AE')}
+                                    style={[
+                                        styles.ring,
+                                        backgroundColor === '#B9C6AE' && styles.ringSelected
+                                    ]}
+                                    >
+                                    <View style={[styles.fill, { backgroundColor: '#B9C6AE' }]} />
+                                </TouchableOpacity>
+                            </View>
+
+                            {/* 
+                            <Button
+                                title="Start Chatting"
+                                onPress={() => navigation.navigate('Chat', {
+                                    name: text,
+                                    backgroundColor: backgroundColor,
+                                })}
+                            /> 
+                            */}
+
+                            <TouchableOpacity
+                                style={styles.startButton}
+                                onPress={() => navigation.navigate('Chat',{
+                                    name:text,
+                                    backgroundColor: backgroundColor,
+                                })}
                             >
-                            <View style={[styles.fill, { backgroundColor: '#474056' }]} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => setBackgroundColor('#8A95A5')}
-                            style={[
-                                styles.ring,
-                                backgroundColor === '#8A95A5' && styles.ringSelected
-                            ]}
-                            >
-                            <View style={[styles.fill, { backgroundColor: '#8A95A5' }]} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => setBackgroundColor('#B9C6AE')}
-                            style={[
-                                styles.ring,
-                                backgroundColor === '#B9C6AE' && styles.ringSelected
-                            ]}
-                            >
-                            <View style={[styles.fill, { backgroundColor: '#B9C6AE' }]} />
-                        </TouchableOpacity>
+                                <Text style= {styles.startButtonText}>Start Chatting</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-
-                    {/* 
-                    <Button
-                        title="Start Chatting"
-                        onPress={() => navigation.navigate('Chat', {
-                            name: text,
-                            backgroundColor: backgroundColor,
-                        })}
-                    /> 
-                    */}
-
-                    <TouchableOpacity
-                        style={styles.startButton}
-                        onPress={() => navigation.navigate('Chat',{
-                            name:text,
-                            backgroundColor: backgroundColor,
-                        })}
-                    >
-                        <Text style= {styles.startButtonText}>Start Chatting</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </ImageBackground>
     );
 }

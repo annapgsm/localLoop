@@ -78,20 +78,22 @@ const Chat = ({ route, navigation }) => {
     
     return (
         <View style={[styles.container, { backgroundColor }]}>
-            <GiftedChat
-                messages={messages}
-                renderBubble={renderBubble}
-                renderSystemMessage={renderSystemMessage}
-                onSend={messages => onSend(messages)}
-                user={{
-                    _id: 1,
-                    name
-                }}
-            />
-
-            {/* Prevents the keyboard from covering the input field on iOS
-                        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }   */}
-            {Platform.OS === "ios"?<KeyboardAvoidingView behavior="padding" />: null}
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+            >
+                <GiftedChat
+                    messages={messages}
+                    renderBubble={renderBubble}
+                    renderSystemMessage={renderSystemMessage}
+                    onSend={messages => onSend(messages)}
+                    user={{
+                        _id: 1,
+                        name
+                    }}
+                />
+            </KeyboardAvoidingView>
         </View>
     );
 };
