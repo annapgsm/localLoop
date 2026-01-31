@@ -1,10 +1,31 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableOpacity, ImageBackground, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { signInAnonymously } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 const Start = ( {navigation} ) => {
     const [text, setText] = useState('');
     const [ backgroundColor, setBackgroundColor ] = useState('#090C08');
     
+    const signInUser = () => {
+        if (!text.trim()) {
+            Alert.alert("Please enter your name");
+            return;
+        }
+        signInAnonymously(auth) // starts ananymous login
+            .then((result) => { // runs when login succeeds
+                const userID = result.user.uid; //result.user is logged-in user object, uid is unique anonymous user id 
+                navigation.navigate("Chat", {
+                    userID: userID,     //pass uid to Chat
+                    name: text,     // pass name input
+                    backgroundColor: backgroundColor, 
+                });
+            })
+            .catch((error)=> {
+                console.log("Anonymous Sign-in failed", error);
+            });
+    };
+
     return (
         //Covers full screen
         <ImageBackground 
@@ -89,10 +110,7 @@ const Start = ( {navigation} ) => {
 
                             <TouchableOpacity
                                 style={styles.startButton}
-                                onPress={() => navigation.navigate('Chat',{
-                                    name:text,
-                                    backgroundColor: backgroundColor,
-                                })}
+                                onPress= {signInUser}
                             >
                                 <Text style= {styles.startButtonText}>Start Chatting</Text>
                             </TouchableOpacity>

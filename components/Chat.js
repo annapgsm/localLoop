@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, KeyboardAvoidingView} from 'react-native';
+import { View, StyleSheet, Platform, KeyboardAvoidingView} from 'react-native';
 import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
+import { collection, query, orderBy, onSnapshot, addDoc } from "firebase/firestore"; 
+// collection() = choose a collection
+// query() = build a query (filters/sort)
+// orderBy() = sort results
+// onSnapshot() = real-time listener
+// addDoc() = write a new document
 
-const Chat = ({ route, navigation }) => {
+//db= firstore database object
+const Chat = ({ route, navigation, db }) => {
 
     // React state to store all chat messages
     const [ messages, setMessages ]= useState([]);
     // Destructure parameters passed via navigation
-    const { name, backgroundColor } = route.params;
+    const { userID, name, backgroundColor } = route.params; // userID comes from anonymous auth
 
     // Map background colors to readable text colors
     const textColorByBackground = {
@@ -25,30 +32,38 @@ const Chat = ({ route, navigation }) => {
 
         // to update the screen header title
         navigation.setOptions({ title: name })
-        //preload chat with initial messages
-        setMessages([
-            {
-                _id:1,
-                text: "Hello developer",
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: "React Native",
-                    avatar: "https://placeimg.com/140/140/any",
-                },
-            },
-            {
-                _id: 2,
-                text: 'This is a system message',
-                createdAt: new Date(),
-                system: true, // system messages are styled differently
-            },
-        ]);
+        
+        //build a firstore query
+        const q = query(
+            collection(db,"messages"), 
+            orderBy("createdAt","desc")
+        );
+
+        //Real Time Listener 
+        const unsubscribe = onSnapshot(q,(snapshot) => { //snapshot is a firestore object (current state of the query results right now)
+            // Convert Firestore documents into GiftedChat message objects to match 
+            const newMessages = snapshot.docs.map((doc) => {
+                // return fields stored in fireStore
+                const data = doc.data()
+                return {
+                    _id: doc.id,
+                    ...data, 
+                    createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+                };
+            });
+            setMessages(newMessages);
+        });
+        return () => {
+            unsubscribe();
+        }
     }, []);    
 
     // Called when the user sends a new message
     const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+        addDoc(
+            collection(db,"messages"),
+            newMessages[0]
+        );
     }
 
     // Custom renderer for chat bubbles
@@ -87,10 +102,10 @@ const Chat = ({ route, navigation }) => {
                     messages={messages}
                     renderBubble={renderBubble}
                     renderSystemMessage={renderSystemMessage}
-                    onSend={messages => onSend(messages)}
+                    onSend={(messages) => onSend(messages)}
                     user={{
-                        _id: 1,
-                        name
+                        _id: userID,
+                        name : name,
                     }}
                 />
             </KeyboardAvoidingView>
