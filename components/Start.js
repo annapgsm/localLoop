@@ -132,19 +132,25 @@ const styles = StyleSheet.create({
         flex: 1,  /* spans full height of screen \*/
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 50,
+        paddingVertical: '6%',
     },
 
     title: {
+        flexGrow: 0, /* prevents it from expanding */
+        flexShrink: 1, /* allows it to shrink */
         fontSize: 45, 
         fontWeight: '600', 
         color: '#FFFFFF',
-        marginTop: 60,
+        marginTop: '20%', /* adjusted */
+        maxHeight: '40%' /* added */
     },
 
     card: {
+        flexGrow: 1, 
+        flexShrink: 0,
         width: '88%',
         height: '44%',
+        maxHeight: 340,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'space-around',
