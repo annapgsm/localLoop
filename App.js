@@ -8,10 +8,30 @@ import Chat from './components/Chat';
 
 import { db } from "./firebaseConfig";
 
+import { useNetInfo } from '@react-native-community/netinfo';
+import { useEffect, useState } from 'react';
+import { Alert, LogBox } from 'react-native';
+import { disableNetwork, enableNetwork } from 'firebase/firestore';
+
+LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
+
 // Create the navigator
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  //real time network connectivity detection
+  const connectionStatus = useNetInfo();
+  const isConnected = connectionStatus.isConnected === true;
+
+  useEffect(()=> {
+    if (connectionStatus.isConnected === false) {
+      Alert.alert("Connection lost");
+      disableNetwork(db); //disable firestore network when there is no connection 
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db);
+    }
+  },[connectionStatus.isConnected]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -31,6 +51,7 @@ const App = () => {
         >
           {(props) => (
             <Chat 
+              isConnected={connectionStatus.isConnected}
               {...props} // Passes navigation + route props from React Navigation
               db={db}    
             />
