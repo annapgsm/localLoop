@@ -13,7 +13,7 @@ const Start = ( {navigation} ) => {
             return;
         }
         signInAnonymously(auth) // starts ananymous login
-            .then((result) => { // runs when login succeeds
+            .then((result) => { 
                 const userID = result.user.uid; //result.user is logged-in user object, uid is unique anonymous user id 
                 navigation.navigate("Chat", {
                     userID: userID,     //pass uid to Chat
@@ -97,16 +97,6 @@ const Start = ( {navigation} ) => {
                                     <View style={[styles.fill, { backgroundColor: '#B9C6AE' }]} />
                                 </TouchableOpacity>
                             </View>
-
-                            {/* 
-                            <Button
-                                title="Start Chatting"
-                                onPress={() => navigation.navigate('Chat', {
-                                    name: text,
-                                    backgroundColor: backgroundColor,
-                                })}
-                            /> 
-                            */}
 
                             <TouchableOpacity
                                 style={styles.startButton}

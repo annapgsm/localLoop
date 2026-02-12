@@ -1,6 +1,8 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 
 // Auth for React Native with persistence
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
@@ -21,6 +23,8 @@ export const app = initializeApp(firebaseConfig);
 
 // Initialize db once, export it too
 export const db = getFirestore(app);
+
+export const storage = getStorage(app);
 
 // This replaces getAuth()
 export const auth = initializeAuth(app, {
