@@ -50,7 +50,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
  
     // Sync with Firestore when online, fallback to cache when offline
     useEffect(()=>{
-        navigation.setOptions({title:name});
+        navigation.setOptions({title: "LocalLoop"});
 
         // ONLINE BRANCH: Only subscribe to Firestore if there is a connection
         if (isConnected === true) {
@@ -114,7 +114,20 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
 
     // If offline hide InputToolbar
     const renderInputToolbar = (props) => {
-        if (isConnected === true) return <InputToolbar {...props} />;
+        if (isConnected === true) {
+            return (
+                <InputToolbar
+                    {...props}
+                    containerStyle={{
+                        backgroundColor: '#FFFFFF',
+                        borderTopWidth: 0,
+                    }}
+                    primaryStyle={{
+                        backgroundColor: '#FFFFFF',
+                    }}
+                />
+            );
+        }
         return null;
     };
 
@@ -196,7 +209,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
             >
                 <GiftedChat
                     messages={messages}
@@ -210,6 +223,14 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
                         name : name,
                     }}
                     renderInputToolbar={renderInputToolbar}
+                    messagesContainerStyle={{
+                        backgroundColor: backgroundColor,
+                    }}
+
+                    listViewProps={{
+                        style: { backgroundColor: backgroundColor }
+                    }}
+                    bottomOffset={Platform.OS === "ios" ? 20 : 0}
                 />
             </KeyboardAvoidingView>
         </View>

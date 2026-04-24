@@ -43,7 +43,13 @@ const Start = ( {navigation} ) => {
                 >
                     <View style={styles.container}>
 
-                        <Text style={styles.title}>Chat App</Text>
+                        <View style={styles.heroText}>
+                            <Text style={styles.title}>LocalLoop</Text>
+                            
+                            <Text style={styles.subtitle}>
+                                Chat and share locations with your local community.
+                            </Text>
+                        </View>
                         
                         <View style={styles.card}>
                             <TextInput
@@ -102,7 +108,7 @@ const Start = ( {navigation} ) => {
                                 style={styles.startButton}
                                 onPress= {signInUser}
                             >
-                                <Text style= {styles.startButtonText}>Start Chatting</Text>
+                                <Text style= {styles.startButtonText}>Join Local Chat</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -131,9 +137,26 @@ const styles = StyleSheet.create({
         fontSize: 45, 
         fontWeight: '600', 
         color: '#FFFFFF',
-        marginTop: '20%', /* adjusted */
+        marginTop: '10%', /* adjusted */
         maxHeight: '40%' /* added */
     },
+
+    subtitle: {
+        width: '80%',
+        fontSize: 16,
+        fontWeight: '300',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginTop: 12,
+        lineHeight: 22,
+    },
+
+    heroText: {
+        alignItems: 'center',
+        width: '85%',
+        marginBottom: 20,
+    },
+
 
     card: {
         flexGrow: 1, 
