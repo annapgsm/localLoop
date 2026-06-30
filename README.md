@@ -1,5 +1,5 @@
 
-# Chat App
+# Local Loop
 
 A cross-platform real-time chat application built with React Native and Expo, featuring Firebase backend integration, offline message caching, media uploads, and location sharing.
 
@@ -12,7 +12,7 @@ This project demonstrates full-stack mobile development, real-time data handling
 | **Frontend** | React Native, Expo, JavaScript |
 | **UI Library** | Gifted Chat |
 | **Navigation** | React Navigation (Native Stack) |
-| **Backend** |  Firebase Firestore (real-time databse) |
+| **Backend** |  Firebase Firestore (real-time database) |
 | **Authentication** | Firebase Anonymous Auth |
 | **Storage** | Firebase Cloud Storage |
 | **Offline Support** | AsyncStorage |
@@ -33,7 +33,7 @@ This project demonstrates full-stack mobile development, real-time data handling
     - Real time updates using onSnapshot
     - Automatic state synchronization
 - Offline Support
-    - Messages cached locally using Asyncstorage
+    - Messages cached locally using AsyncStorage
     - Automatic fallback when offline
     - Firestore network automatically enabled/ disabled based on connection
 - Media Sharing
@@ -42,10 +42,10 @@ This project demonstrates full-stack mobile development, real-time data handling
     - Images uploaded to Firebase Cloud Storage 
     - Download URL saved in Firestore
 - Location Sharing 
-    - Fetch current divice location using Expo Location 
+    - Fetch current device location using Expo Location 
     - Display map preview in chat 
     - Marker placed at exact coordinates
-    - Tap loaction preview to open in Google Maps
+    - Tap location preview to open in Google Maps
 - UI Features
     - Custom background color selection
     - Styled chat bubbles
@@ -63,8 +63,8 @@ Make sure you have installed:
 ### Steps
 **Clone the repository**  
    ```bash
-   git clone https://github.com/annapgsm/chatApp.git
-   cd chatApp
+   git clone https://github.com/annapgsm/localLoop.git
+   cd localLoop
    ```
 **Install dependencies** 
    ```bash
@@ -91,8 +91,8 @@ The Firebase credentials are stored in: firebaseConfig.js
 
 If you want to use your own Firebase project: 
 1) Create new Firebase project 
-2) Enable Firestore, Anonymous Authentication and Sorage 
-3) Replace the credentials inside firebase.Config.js 
+2) Enable Firestore, Anonymous Authentication and Storage 
+3) Replace the credentials inside firebaseConfig.js 
 
 ## Development & Testing
 
